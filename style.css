@@ -129,7 +129,7 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    left: 600px;       /* lines up exactly with .left’s right edge */
+    left: 625px;       /* lines up exactly with .left’s right edge */
     width: 2px;
     background-color: #3CAE58;
     pointer-events: none;
