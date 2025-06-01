@@ -1,0 +1,198 @@
+/*──────────────────────────────────────────────
+  1) RESET & BODY (no page scroll; .left scrolls)
+──────────────────────────────────────────────*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    width: 100%;
+    
+    font-family: sans-serif;
+  }
+  
+  /*──────────────────────────────────────────────
+    2) SPLIT‐SCREEN CONTAINER
+  ──────────────────────────────────────────────*/
+  .container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  /*──────────────────────────────────────────────
+    3) LEFT PANEL: 600px WIDE
+  ──────────────────────────────────────────────*/
+  .left {
+    position: relative;  /* so .bg can be absolute inside it */
+    width: 600px;        /* fixed column width */
+    height: 100vh;       /* full viewport height */
+      
+  }
+  
+  /*──────────────────────────────────────────────
+    4) BACKGROUND LAYER (absolute, fills .left)
+  ──────────────────────────────────────────────*/
+  .bg {
+    position: absolute;
+    top: 0px;
+    left: -20px;
+    width: 110%;         /* fill the entire 600px × 100vh */
+    height: 100%;
+    z-index: 1;          /* behind .scrollable */
+  }
+  .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* scale+crop so no white gap appears */
+    object-position: center center;
+  }
+
+  ::-webkit-scrollbar { display: none; }
+  
+  /*──────────────────────────────────────────────
+    5) SCROLLABLE CONTENT (on top of bg)
+  ──────────────────────────────────────────────*/
+  .scrollable {
+    font-family: 'ABCDinamoReg', sans-serif;
+    font-weight: 400; 
+    color: #3CAE58;
+    font-size: 1rem;
+    position: relative;
+    z-index: 2;          /* above .bg */
+    height: 100%;        /* full height of .left */
+    overflow-y: auto;    /* this scrolls, not the page */
+  }
+  
+  /*──────────────────────────────────────────────
+    6) INTRO SECTION (first 100vh)
+  ──────────────────────────────────────────────*/
+  @font-face {
+    font-family: 'softerfont';
+    src: url('/latest_versionVF.ttf') format('opentype');
+   
+  }
+  .intro {
+    
+    height: 100vh;       /* exactly fill the left panel’s viewport */
+    display: flex;
+    align-items: center; /* center typewriter text vertically */
+    justify-content: center;
+
+  }
+  
+  /*──────────────────────────────────────────────
+    7) TYPEWRITER TEXT STYLING
+  ──────────────────────────────────────────────*/
+  .typewriter-wrapper {
+    font-family: 'softerfont', sans-serif;
+    font-variation-settings: 
+    'wdth' 0,
+    'wght' 0,
+    'DIST' 0;
+    font-size: 5rem;
+    color: #3CAE58;
+    text-align: center;
+    padding: 0 1rem;    /* small horizontal padding */
+  }
+  
+.instructions {
+    color: #3CAE58;
+    font-size: 1.2rem;
+    height: 100vh;       /* exactly fill the left panel’s viewport */
+    display: flex;
+    align-items: center; /* center typewriter text vertically */
+    justify-content: center;
+    font-family: 'ABCDinamoReg', sans-serif;
+    font-weight: 400; 
+
+}
+  .content {
+    padding: 2rem;
+    /* background-color: white;  white background behind text */
+  }
+  
+  /*──────────────────────────────────────────────
+    9) FOOTNOTE REFERENCES
+  ──────────────────────────────────────────────*/
+  .reference {
+    color: blue;    font-weight: bold;
+    cursor: help;
+  }
+  
+  /*──────────────────────────────────────────────
+   10) RED DIVIDER AT EXACTLY 600px 
+  ──────────────────────────────────────────────*/
+  .divider {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 600px;       /* lines up exactly with .left’s right edge */
+    width: 2px;
+    background-color: #3CAE58;
+    pointer-events: none;
+    z-index: 999;
+  }
+  
+
+  @font-face {
+    font-family: 'ABCDinamoReg';
+    src: url('/ABCDiatype-Regular-Trial.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+   RIGHT-SIDE SCROLL TRACKER STYLES
+   ───────────────────────────────────────────────────────────── */
+ /* ─────────────────────────────────────────────────────────
+   SCROLL-TRACKER STYLES (outline + flower)
+─────────────────────────────────────────────────────────── */
+.scroll-tracker {
+
+    position: fixed;
+    
+    top: 50%;
+    right: -5px;          /* distance from right edge */
+    height: 95vh;        /* full viewport height */
+    width: 50px;  
+    transform: translateY(-50%);        /* width to hold the outline + flower */
+    pointer-events: none; /* never block clicks on the page */
+    z-index: 1000;        /* on top of other content */
+  }
+  
+  /* ─ The thin green outline (only a border‐left) ────────────── */
+  .tracker-outline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;                    /* center inside 50px container */
+    width: 4px;                     /* no width—just a border line */
+    border-left: 2px solid #3CAE58;
+    transform: translateX(-50%);  /* center the border exactly */
+  }
+  
+  /* ─ The flower icon (initially at top) ─────────────────────── */
+  #flower {
+    position: absolute;
+    left: 48%;                    /* center on the outline */
+    top: 0;                       /* JS will update this */
+    width: 25px;                  /* adjust to your PNG’s dimensions */
+    height: 25px;
+    transform-origin: 50% 50%;
+    will-change: transform;   
+        /* hint the browser for smooth transforms */
+  }
+  .RQ {
+    padding-bottom: 300px;
+  }
+
+  .bibliography span {
+    display: list-item;          /* makes each span render as if it were an <li> */
+    list-style-type: disc;       /* “disc” for a filled‐circle bullet */
+    list-style-position: inside; /* bullet sits inside the left margin of this block */
+    margin: 0 0 0.5em;           /* optional spacing between entries */
+  }
